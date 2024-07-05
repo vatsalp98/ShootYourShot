@@ -1,5 +1,5 @@
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -22,6 +22,7 @@ model User {
   password              String?
   salt                  String?
   gender                Gender
+  city                  String?
   avatar                String                 @default("/avatar/sampleAvatar.png")
   lookingFor            Gender
   emailVerified         DateTime?
@@ -29,7 +30,18 @@ model User {
   twoFactorConfirmation TwoFactorConfirmation?
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+  interests             String[]
+  prompts               Prompt[]
   accounts              Account[]
+}
+
+model Prompt {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  question String
+  category String
+  answer   String
+  userId   String @db.ObjectId
+  user     User   @relation(fields: [userId], references: [id])
 }
 
 model Account {

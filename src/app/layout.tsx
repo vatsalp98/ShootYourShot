@@ -8,6 +8,7 @@ import { ViewTransitions } from "next-view-transitions";
 import { cn, constructMetadata } from "~/lib/utils";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "auth";
+import { Toaster } from "~/components/ui/toaster";
 
 export const metadata = constructMetadata();
 
@@ -38,6 +39,7 @@ export default async function RootLayout({
                 {children}
               </ThemeProvider>
             </TRPCReactProvider>
+            <Toaster />
           </body>
         </html>
       </ViewTransitions>

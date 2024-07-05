@@ -67,3 +67,47 @@ export function validPassword(password: string, hash: string, salt: string) {
     .toString("hex");
   return hash === checkHash;
 }
+
+export const allPrompts = [
+  "What's your favorite Netflix show?",
+  "What's your go-to comfort food?",
+  "What's your favorite music band?",
+  "What's your favorite color?",
+  "What's your favorite clothing style?",
+  "What's your favorite season?",
+];
+
+export const allCategories = [
+  "Food",
+  "Hobbies",
+  "Technology",
+  "Lifestyle",
+  "Dating",
+];
+
+export const interestItems = [
+  {
+    id: "camping",
+    label: "Camping",
+  },
+  {
+    id: "cooking",
+    label: "Cooking",
+  },
+  {
+    id: "coding",
+    label: "Coding",
+  },
+  {
+    id: "hiking",
+    label: "Hiking",
+  },
+  {
+    id: "clubbing",
+    label: "Clubbing",
+  },
+  {
+    id: "driving",
+    label: "Driving",
+  },
+] as const;

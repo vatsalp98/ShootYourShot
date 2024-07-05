@@ -21,7 +21,6 @@ import { useCurrentUser } from "~/hooks/use-current-user";
 const MobileNav = () => {
   const [scrolled, setScrolled] = useState(false);
   const user = useCurrentUser();
-  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,22 +76,6 @@ const MobileNav = () => {
                 Home &rarr;
               </Link>
             </li>
-            <li>
-              <Link
-                href={"/about"}
-                className={buttonVariants({ variant: "link" })}
-              >
-                About Us &rarr;
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={"/contact"}
-                className={buttonVariants({ variant: "link" })}
-              >
-                Contact Us &rarr;
-              </Link>
-            </li>
 
             {user ? (
               <>
@@ -104,14 +87,6 @@ const MobileNav = () => {
                     Dashboard &rarr;
                   </Link>
                 </li>
-                <li>
-                  <Link
-                    href={"/profile"}
-                    className={buttonVariants({ variant: "link" })}
-                  >
-                    Profile &rarr;
-                  </Link>
-                </li>
               </>
             ) : (
               <>
@@ -120,15 +95,7 @@ const MobileNav = () => {
                     href={"/auth/login"}
                     className={buttonVariants({ variant: "link" })}
                   >
-                    Sign In &rarr;
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href={"/auth/register"}
-                    className={buttonVariants({ variant: "link" })}
-                  >
-                    Sign Up &rarr;
+                    Login &rarr;
                   </Link>
                 </li>
               </>

@@ -19,18 +19,18 @@ const config = {
     },
     extend: {
       colors: {
-        main: "#ff6b6b",
-        mainAccent: "#ff3333", // not needed for shadcn components
+        main: "#c4a1ff",
+        mainAccent: "#9e66ff", // not needed for shadcn components
         overlay: "rgba(0,0,0,0.8)",
         // background color overlay for alert dialogs, modals, etc.
 
         // light mode
-        bg: "#fcd7d7",
+        bg: "#daf5f0",
         text: "#000",
         border: "#000",
 
         // dark mode
-        darkBg: "#1D1F27",
+        darkBg: "#0f3730",
         darkText: "#eeefe9",
         darkBorder: "#000",
       },

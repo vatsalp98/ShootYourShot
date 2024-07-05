@@ -26,6 +26,7 @@ import { useState, useTransition } from "react";
 import { register } from "~/actions/register";
 import FormError from "./form-error";
 import FormSuccess from "./form-success";
+import { Checkbox } from "./ui/checkbox";
 
 export default function RegisterForm() {
   type TRegisterValues = z.infer<typeof registerSchema>;
@@ -66,17 +67,62 @@ export default function RegisterForm() {
       >
         <Form {...registerForm}>
           <form onSubmit={registerForm.handleSubmit(onSubmit)}>
-            <div className="space-y-2">
-              <div className="flex flex-row gap-2">
+            {!success && (
+              <div className="space-y-2">
+                <div className="flex flex-row gap-2">
+                  <FormField
+                    name="name"
+                    control={registerForm.control}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="John Doe"
+                            {...field}
+                            disabled={isPending}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="slug"
+                    control={registerForm.control}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Slug</FormLabel>
+                        <FormControl>
+                          <div className="relative">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                              <span className="text-text dark:text-darkText sm:text-sm">
+                                @
+                              </span>
+                            </div>
+                            <Input
+                              placeholder="johndoe"
+                              {...field}
+                              className="pl-10"
+                              disabled={isPending}
+                            />
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
-                  name="name"
+                  name="email"
                   control={registerForm.control}
                   render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>Full Name</FormLabel>
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="John Doe"
+                          placeholder="john@example.com"
                           {...field}
                           disabled={isPending}
                         />
@@ -85,151 +131,127 @@ export default function RegisterForm() {
                     </FormItem>
                   )}
                 />
+
+                <div className="flex flex-row gap-2">
+                  <FormField
+                    name="gender"
+                    control={registerForm.control}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Gender</FormLabel>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Pick your gender..." />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="MALE">Male</SelectItem>
+                            <SelectItem value="FEMALE">Female</SelectItem>
+                            <SelectItem value="TRANS">Trans</SelectItem>
+                            <SelectItem value="OTHER">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    name="lookingFor"
+                    control={registerForm.control}
+                    render={({ field }) => (
+                      <FormItem className="flex-1">
+                        <FormLabel>Interested In</FormLabel>
+                        <Select
+                          value={field.value}
+                          onValueChange={field.onChange}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select your interest..." />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="MALE">Male</SelectItem>
+                            <SelectItem value="FEMALE">Female</SelectItem>
+                            <SelectItem value="TRANS">Trans</SelectItem>
+                            <SelectItem value="OTHER">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
                 <FormField
-                  name="slug"
+                  name="password"
                   control={registerForm.control}
                   render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>Slug</FormLabel>
+                    <FormItem>
+                      <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <div className="relative">
-                          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <span className="text-text dark:text-darkText sm:text-sm">
-                              @
-                            </span>
-                          </div>
-                          <Input
-                            placeholder="johndoe"
-                            {...field}
-                            className="pl-10"
-                            disabled={isPending}
-                          />
-                        </div>
+                        <Input
+                          placeholder="**********"
+                          {...field}
+                          type="password"
+                          disabled={isPending}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              </div>
-
-              <FormField
-                name="email"
-                control={registerForm.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="john@example.com"
-                        {...field}
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className="flex flex-row gap-2">
                 <FormField
-                  name="gender"
+                  name="confirm_password"
                   control={registerForm.control}
                   render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>Gender</FormLabel>
-                      <Select
-                        value={field.value}
-                        onValueChange={field.onChange}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Pick your gender..." />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="MALE">Male</SelectItem>
-                          <SelectItem value="FEMALE">Female</SelectItem>
-                          <SelectItem value="TRANS">Trans</SelectItem>
-                          <SelectItem value="OTHER">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-
+                    <FormItem>
+                      <FormLabel>Confirm password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="**********"
+                          {...field}
+                          type="password"
+                          disabled={isPending}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
                 <FormField
-                  name="lookingFor"
                   control={registerForm.control}
+                  name="confirm"
                   render={({ field }) => (
-                    <FormItem className="flex-1">
-                      <FormLabel>Interested In</FormLabel>
-                      <Select
-                        value={field.value}
-                        onValueChange={field.onChange}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select your interest..." />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="MALE">Male</SelectItem>
-                          <SelectItem value="FEMALE">Female</SelectItem>
-                          <SelectItem value="TRANS">Trans</SelectItem>
-                          <SelectItem value="OTHER">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 p-4 ">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Agree to terms and conditions.</FormLabel>
+                      </div>
                     </FormItem>
                   )}
                 />
               </div>
-
-              <FormField
-                name="password"
-                control={registerForm.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="**********"
-                        {...field}
-                        type="password"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                name="confirm_password"
-                control={registerForm.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm password</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="**********"
-                        {...field}
-                        type="password"
-                        disabled={isPending}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+            )}
 
             {!success && <FormError message={error} />}
             <FormSuccess message={success} />
 
-            <Button className="mt-5 w-full" disabled={isPending}>
-              Create
-            </Button>
+            {!success && (
+              <Button className="mt-5 w-full" disabled={isPending}>
+                Create
+              </Button>
+            )}
           </form>
         </Form>
       </CardWrapper>

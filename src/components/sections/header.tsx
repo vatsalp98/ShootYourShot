@@ -1,3 +1,4 @@
+import { Link } from "next-view-transitions";
 import { Button } from "~/components/ui/button";
 
 export default function Header() {
@@ -15,8 +16,9 @@ export default function Header() {
         <Button
           size="lg"
           className="h-12 text-base font-heading md:text-lg lg:h-14 lg:text-xl"
+          asChild
         >
-          Get started
+          <Link href={"/auth/login"}>Get started</Link>
         </Button>
       </div>
     </header>
